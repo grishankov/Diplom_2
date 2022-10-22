@@ -14,7 +14,7 @@ public class APIClientUser extends HomePageURL {
 
     @Step ("Create a user")
     public static Response createUserAccount(User user){
-        return (Response) given()
+        return given()
                 .spec(getBaseSpeciafications())
                 .and()
                 .body(user)
@@ -23,7 +23,7 @@ public class APIClientUser extends HomePageURL {
 
     @Step ("Login a user")
     public static Response loginUserAccount(Login login){
-        return (Response) given()
+        return given()
                 .spec(getBaseSpeciafications())
                 .and()
                 .body(login)
@@ -32,7 +32,7 @@ public class APIClientUser extends HomePageURL {
 
     @Step ("Login a user")
     public static Response deleteUserAccount(String accessToken){
-        return (Response) given()
+        return given()
                 .spec(getBaseSpeciafications())
                 .and()
                 .header("Authorization", accessToken)
@@ -41,7 +41,7 @@ public class APIClientUser extends HomePageURL {
 
     @Step ("Patch user information")
     public static Response patchUserAccount (User user, String accessToken){
-        return (Response) given()
+        return given()
                 .spec(getBaseSpeciafications())
                 .and()
                 .header("Authorization", accessToken)

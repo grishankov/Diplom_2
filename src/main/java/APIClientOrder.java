@@ -1,14 +1,13 @@
 import Models.Order;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
 
 public class APIClientOrder extends HomePageURL{
     @Step ("Create an order")
     public Response createOrder (String json) {
-        return (Response) given()
+        return given()
                 .spec(getBaseSpeciafications())
                 .and()
                 .body(json)
@@ -17,7 +16,7 @@ public class APIClientOrder extends HomePageURL{
 
     @Step ("Get user orders")
     public Response getUserOrders (String accessToken) {
-        return (Response) given()
+        return given()
                 .spec(getBaseSpeciafications())
                 .and()
                 .header("Authorization", accessToken)
