@@ -1,13 +1,16 @@
+package Clients;
+
 import Models.Login;
 import Models.User;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
+import org.mortbay.util.ajax.JSON;
 
 import static io.restassured.RestAssured.given;
 
 public class APIClientUser extends HomePageURL {
 
-    @Step("Creation of User")
+    @Step("Creation object of User")
     public static User creationObjectUser(String email, String password, String name) {
         return new User(email, password, name);
     }
@@ -30,8 +33,8 @@ public class APIClientUser extends HomePageURL {
                 .post(BaseConfigurations.USER_LOGIN);
     }
 
-    @Step ("Login a user")
-    public static Response deleteUserAccount(String accessToken){
+    @Step ("Delete a user")
+    public static Response deleteUserAccount(User accessToken){
         return given()
                 .spec(getBaseSpeciafications())
                 .and()

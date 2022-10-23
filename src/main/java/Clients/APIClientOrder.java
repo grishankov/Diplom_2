@@ -1,3 +1,5 @@
+package Clients;
+
 import Models.Order;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;

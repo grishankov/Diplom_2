@@ -1,7 +1,8 @@
+package Clients;
+
 import Models.Login;
-import Models.Token;
 import io.qameta.allure.Step;
-import org.openqa.selenium.devtools.v104.network.model.Response;
+
 
 
 public class APILoginClient {

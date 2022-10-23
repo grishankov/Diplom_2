@@ -1,3 +1,5 @@
+package Clients;
+
 public interface BaseConfigurations {
     String BASE_URL = "https://stellarburgers.nomoreparties.site/api";
     String HEADER_TYPE = "application/json";
