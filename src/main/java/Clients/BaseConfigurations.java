@@ -1,7 +1,7 @@
 package Clients;
 
 public interface BaseConfigurations {
-    String BASE_URL = "https://stellarburgers.nomoreparties.site/api";
+    String BASE_URL = "https://stellarburgers.nomoreparties.site";
     String HEADER_TYPE = "application/json";
     String USER_CREATE = "/api/auth/register";
     String USER_LOGIN = "/api/auth/login";

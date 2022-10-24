@@ -5,16 +5,15 @@ import Models.User;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
+import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.devtools.v104.network.model.Response;
-import io.restassured.internal.RestAssuredResponseImpl;
 
 import static org.apache.http.HttpStatus.SC_OK;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 
 public class CreateUserTest extends HomePageURL {
@@ -36,12 +35,11 @@ public class CreateUserTest extends HomePageURL {
     @Test
     @DisplayName("Создание пользователя")
     public void registrationUser() {
-        ValidatableResponse responseUser = (ValidatableResponse) APIClientUser.deleteUserAccount(user);
+        ValidatableResponse responseUser = APIClientUser.createUserAccount(user).then();
         token = responseUser.extract().path("accessToken");
 
         responseUser.assertThat()
-                .statusCode(SC_OK)
-                .extract()
-                .path("accessToken");
+                .statusCode(SC_OK);
+        assertThat(token, is(not(emptyString())));
     }
 }

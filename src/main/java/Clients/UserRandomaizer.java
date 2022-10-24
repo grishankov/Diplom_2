@@ -8,7 +8,7 @@ import java.util.Random;
 public class UserRandomaizer {
 
     public static @NotNull String getRandomEmail(){
-        String email = "qwerty" + new Random().nextInt(5)+ "yandex.ru";
+        String email = "qwerty" + new Random().nextInt(5)+ "@yandex.ru";
         return email;
     }
 
