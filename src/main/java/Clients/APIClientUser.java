@@ -1,10 +1,10 @@
 package Clients;
 
-import Models.Login;
+import Models.Token;
 import Models.User;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.mortbay.util.ajax.JSON;
+import org.apache.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
 
@@ -25,22 +25,28 @@ public class APIClientUser extends HomePageURL {
     }
 
     @Step ("Login a user")
-    public static Response loginUserAccount(Login login){
+    public static Response loginUserAccount(User user){
         return given()
                 .spec(getBaseSpeciafications())
                 .and()
-                .body(login)
+                .body(user)
                 .post(BaseConfigurations.USER_LOGIN);
     }
 
     @Step ("Delete a user")
-    public static Response deleteUserAccount(User accessToken){
-        return given()
-                .spec(getBaseSpeciafications())
-                .and()
-                .header("Authorization", accessToken)
-                .delete("/api/auth/user");
+    public void deleteUserAccount(User user) {
+        Response response = loginUserAccount(user);
+        if (response.statusCode() == HttpStatus.SC_OK) {
+            Token authorizationInfo = response.as(Token.class);
+
+            given()
+                    .spec(getBaseSpeciafications())
+                    .auth().oauth2(authorizationInfo.getAccessToken())
+                    .when()
+                    .delete("auth/user");
+        }
     }
+
 
     @Step ("Patch user information")
     public static Response patchUserAccount (User user, String accessToken){

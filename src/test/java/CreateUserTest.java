@@ -1,61 +1,66 @@
 import Clients.APIClientUser;
 import Clients.HomePageURL;
-import Clients.UserRandomaizer;
 import Models.User;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.response.ValidatableResponse;
-import org.hamcrest.MatcherAssert;
+import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 
-import static org.apache.http.HttpStatus.SC_FORBIDDEN;
-import static org.apache.http.HttpStatus.SC_OK;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 
 
 public class CreateUserTest extends HomePageURL {
     User user;
     APIClientUser apiClientUser;
-    private String token;
 
-    @BeforeEach
-    public void setUp(){
+    @Before
+    public void setUp() {
         this.apiClientUser = new APIClientUser();
-        this.user = UserRandomaizer.getRandomUser();
-    }
-
-    @AfterEach
-    public void tearDown(){
-    APIClientUser.deleteUserAccount(user);
     }
 
     @Test
     @DisplayName("Create new user")
+    @Description("Тест на создание нового юзера")
     public void registrationUser() {
-        ValidatableResponse responseUser = APIClientUser.createUserAccount(user).then();
-        token = responseUser.extract().path("accessToken");
-
-        responseUser.assertThat()
-                .statusCode(SC_OK);
-        assertThat(token, is(not(emptyString())));
+        user = new User(User.getRandomEmail(), User.getRandomPassword(), User.getRandomName());
+        APIClientUser.createUserAccount(user)
+                .then().assertThat().statusCode(HttpStatus.SC_OK)
+                .and().assertThat().body("success", equalTo(true));
     }
 
     @Test
     @DisplayName("Create new user with exist data")
+    @Description("Тест на создания юзера дважды")
     public void registrationUserTwice() {
-        ValidatableResponse responseUser = APIClientUser.createUserAccount(user).then();
-        token = responseUser.extract().path("accessToken");
-        responseUser.assertThat()
-                .statusCode(SC_OK);
-        assertThat(token, is(not(emptyString())));
-        ValidatableResponse responseUser2 = APIClientUser.createUserAccount(user).then();
-        responseUser2.assertThat()
-                .statusCode(SC_FORBIDDEN);
+        user = new User(User.getRandomEmail(), User.getRandomPassword(), User.getRandomName());
+        boolean isUserRegistered =
+                APIClientUser
+                        .createUserAccount(user)
+                        .then().statusCode(HttpStatus.SC_OK)
+                        .and().extract().body().path("success");
+        if (!isUserRegistered) {
+            Assert.fail("Failed to create user for verification.");
+        }
+    }
+
+    @Test
+    @DisplayName("Create new user with no data")
+    @Description("Тест на создание юзера без одного из обязательных параметров")
+    public void registrationUserWithNoName() {
+        user = new User(User.getRandomEmail(), User.getRandomPassword(), User.getRandomName());
+        user.setName(null);
+
+        APIClientUser
+                .createUserAccount(user)
+                .then().assertThat().statusCode(HttpStatus.SC_FORBIDDEN)
+                .and().assertThat().body("success", equalTo(false));
+    }
+
+    @After
+    public void tearDown() {
+        apiClientUser.deleteUserAccount(user);
     }
 }

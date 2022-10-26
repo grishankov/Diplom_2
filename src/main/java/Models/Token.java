@@ -1,13 +1,20 @@
 package Models;
 
 public class Token{
-    private String accessToken;
+    public Boolean success;
+    public User user;
+    public String accessToken;
+    public String refreshToken;
 
-    public String getAccessToken() {
-        return accessToken;
+    public User getUser() {
+        return user;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getAccessToken(){
+        return accessToken.replace("Bearer ", "");
     }
 }
