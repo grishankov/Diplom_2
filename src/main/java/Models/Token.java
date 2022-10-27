@@ -1,10 +1,8 @@
 package Models;
 
 public class Token{
-    public Boolean success;
     public User user;
     public String accessToken;
-    public String refreshToken;
 
     public User getUser() {
         return user;

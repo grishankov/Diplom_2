@@ -49,12 +49,11 @@ public class APIClientUser extends HomePageURL {
 
 
     @Step ("Patch user information")
-    public static Response patchUserAccount (User user, String accessToken){
+    public static Response patchUserAccount(Token token){
         return given()
                 .spec(getBaseSpeciafications())
-                .and()
-                .header("Authorization", accessToken)
-                .body(user)
+                .auth().oauth2(token.getAccessToken())
+                .body(token.getUser().toJson())
                 .patch(BaseConfigurations.USER);
     }
 }

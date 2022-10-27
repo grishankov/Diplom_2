@@ -1,5 +1,6 @@
 package Models;
 
+import com.google.gson.GsonBuilder;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -74,5 +75,9 @@ public class User {
         user.setPassword(getRandomPassword());
         user.setName(null);
         return user;
+    }
+
+    public String toJson() {
+        return new GsonBuilder().serializeNulls().create().toJson(this);
     }
 }

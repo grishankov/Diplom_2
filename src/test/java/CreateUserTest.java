@@ -25,22 +25,31 @@ public class CreateUserTest extends HomePageURL {
     @DisplayName("Create new user")
     @Description("Тест на создание нового юзера")
     public void registrationUser() {
-        user = new User(User.getRandomEmail(), User.getRandomPassword(), User.getRandomName());
-        APIClientUser.createUserAccount(user)
-                .then().assertThat().statusCode(HttpStatus.SC_OK)
-                .and().assertThat().body("success", equalTo(true));
+        User user = User.getRandomUserFull();
+        apiClientUser
+                .createUserAccount(user)
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK)
+                .and()
+                .assertThat()
+                .body("success", equalTo(true));
     }
 
     @Test
     @DisplayName("Create new user with exist data")
     @Description("Тест на создания юзера дважды")
     public void registrationUserTwice() {
-        user = new User(User.getRandomEmail(), User.getRandomPassword(), User.getRandomName());
+        User user = User.getRandomUserFull();
         boolean isUserRegistered =
-                APIClientUser
+                apiClientUser
                         .createUserAccount(user)
-                        .then().statusCode(HttpStatus.SC_OK)
-                        .and().extract().body().path("success");
+                        .then()
+                        .statusCode(HttpStatus.SC_OK)
+                        .and()
+                        .extract()
+                        .body()
+                        .path("success");
         if (!isUserRegistered) {
             Assert.fail("Failed to create user for verification.");
         }
@@ -50,13 +59,16 @@ public class CreateUserTest extends HomePageURL {
     @DisplayName("Create new user with no data")
     @Description("Тест на создание юзера без одного из обязательных параметров")
     public void registrationUserWithNoName() {
-        user = new User(User.getRandomEmail(), User.getRandomPassword(), User.getRandomName());
+        User user = User.getRandomUserFull();
         user.setName(null);
-
-        APIClientUser
+        apiClientUser
                 .createUserAccount(user)
-                .then().assertThat().statusCode(HttpStatus.SC_FORBIDDEN)
-                .and().assertThat().body("success", equalTo(false));
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_FORBIDDEN)
+                .and()
+                .assertThat()
+                .body("success", equalTo(false));
     }
 
     @After

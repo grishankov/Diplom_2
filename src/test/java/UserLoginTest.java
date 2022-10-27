@@ -70,6 +70,7 @@ public class UserLoginTest {
             Assert.fail("Failed to create user for verification.");
             return;
         }
+        user.setName(User.getRandomName());
         user.setPassword(User.getRandomPassword());
         APIClientUser.loginUserAccount(user)
                 .then()

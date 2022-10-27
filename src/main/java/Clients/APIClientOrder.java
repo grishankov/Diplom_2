@@ -1,6 +1,8 @@
 package Clients;
 
 import Models.Order;
+import Models.OrderParams;
+import Models.Token;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
@@ -8,11 +10,20 @@ import static io.restassured.RestAssured.given;
 
 public class APIClientOrder extends HomePageURL{
     @Step ("Create an order")
-    public Response createOrder (String json) {
+    public Response createOrder(OrderParams orderParams, Token token) {
         return given()
                 .spec(getBaseSpeciafications())
-                .and()
-                .body(json)
+                .auth().oauth2(token.getAccessToken())
+                .body(orderParams.toJson())
+                .when()
+                .post(BaseConfigurations.ORDERS);
+    }
+    @Step ("Create an order w/o auth")
+    public Response createOrderWithoutAuth(OrderParams orderParams) {
+        return given()
+                .spec(getBaseSpeciafications())
+                .body(orderParams.toJson())
+                .when()
                 .post(BaseConfigurations.ORDERS);
     }
 
