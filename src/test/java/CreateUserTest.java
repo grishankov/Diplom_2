@@ -25,7 +25,7 @@ public class CreateUserTest extends HomePageURL {
     @DisplayName("Create new user")
     @Description("Тест на создание нового юзера")
     public void registrationUser() {
-        User user = User.getRandomUserFull();
+        User.getRandomUserFull();
         apiClientUser
                 .createUserAccount(user)
                 .then()
