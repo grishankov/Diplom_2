@@ -1,6 +1,6 @@
-package Models;
+package models;
 
-public class Token{
+public class Token {
     public User user;
     public String accessToken;
 
@@ -12,7 +12,7 @@ public class Token{
         this.user = user;
     }
 
-    public String getAccessToken(){
+    public String getAccessToken() {
         return accessToken.replace("Bearer ", "");
     }
 }

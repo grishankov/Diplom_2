@@ -1,8 +1,8 @@
-import Clients.APIClientUser;
-import Clients.HomePageURL;
-import Models.User;
+import clients.APIClientUser;
+import clients.HomePageURL;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import models.User;
 import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Assert;
@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 
 public class CreateUserTest extends HomePageURL {
-    User user;
+    private User user;
     APIClientUser apiClientUser;
 
     @Before
@@ -26,7 +26,7 @@ public class CreateUserTest extends HomePageURL {
     @Description("Тест на создание нового юзера")
     public void registrationUser() {
         User.getRandomUserFull();
-        apiClientUser
+        APIClientUser
                 .createUserAccount(user)
                 .then()
                 .assertThat()
@@ -42,7 +42,7 @@ public class CreateUserTest extends HomePageURL {
     public void registrationUserTwice() {
         User user = User.getRandomUserFull();
         boolean isUserRegistered =
-                apiClientUser
+                APIClientUser
                         .createUserAccount(user)
                         .then()
                         .statusCode(HttpStatus.SC_OK)
@@ -61,7 +61,7 @@ public class CreateUserTest extends HomePageURL {
     public void registrationUserWithNoName() {
         User user = User.getRandomUserFull();
         user.setName(null);
-        apiClientUser
+        APIClientUser
                 .createUserAccount(user)
                 .then()
                 .assertThat()

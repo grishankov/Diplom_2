@@ -1,15 +1,15 @@
-package Clients;
+package clients;
 
-import Models.Order;
-import Models.OrderParams;
-import Models.Token;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
+import models.Order;
+import models.OrderParams;
+import models.Token;
 
 import static io.restassured.RestAssured.given;
 
-public class APIClientOrder extends HomePageURL{
-    @Step ("Create an order")
+public class APIClientOrder extends HomePageURL {
+    @Step("Create an order")
     public Response createOrder(OrderParams orderParams, Token token) {
         return given()
                 .spec(getBaseSpeciafications())
@@ -18,7 +18,8 @@ public class APIClientOrder extends HomePageURL{
                 .when()
                 .post(BaseConfigurations.ORDERS);
     }
-    @Step ("Create an order w/o auth")
+
+    @Step("Create an order w/o auth")
     public Response createOrderWithoutAuth(OrderParams orderParams) {
         return given()
                 .spec(getBaseSpeciafications())
@@ -27,8 +28,8 @@ public class APIClientOrder extends HomePageURL{
                 .post(BaseConfigurations.ORDERS);
     }
 
-    @Step ("Get user orders")
-    public Response getUserOrders (String accessToken) {
+    @Step("Get user orders")
+    public Response getUserOrders(String accessToken) {
         return given()
                 .spec(getBaseSpeciafications())
                 .and()
@@ -36,13 +37,13 @@ public class APIClientOrder extends HomePageURL{
                 .get(BaseConfigurations.ORDERS);
     }
 
-    @Step ("Creation object order")
-    public static Order createObjectOrder(String[] ingredients){
+    @Step("Creation object order")
+    public static Order createObjectOrder(String[] ingredients) {
         return new Order(ingredients);
     }
 
-    @Step ("Checking answer code with invalid hash")
-    public static void checkAnswerCodeInvalidHash(Response response, int answerCode){
+    @Step("Checking answer code with invalid hash")
+    public static void checkAnswerCodeInvalidHash(Response response, int answerCode) {
         response
                 .then()
                 .assertThat()

@@ -1,12 +1,11 @@
-import Clients.APIClientIngredients;
-import Clients.APIClientOrder;
-import Clients.APIClientUser;
-import Clients.HomePageURL;
-import Models.Order;
-import Models.OrderParams;
-import Models.Token;
-import Models.User;
+import clients.APIClientIngredients;
+import clients.APIClientOrder;
+import clients.APIClientUser;
 import jdk.jfr.Description;
+import models.Order;
+import models.OrderParams;
+import models.Token;
+import models.User;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
@@ -19,17 +18,17 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static Models.OrderParams.getIngredients;
-import static Models.OrderParams.getRandomUserAuthInfo;
+import static models.OrderParams.getIngredients;
+import static models.OrderParams.getRandomUserAuthInfo;
 
 public class OrderTest {
-    User user;
     private final APIClientOrder apiClientOrder = new APIClientOrder();
-    private final APIClientIngredients apiClientIngredients= new APIClientIngredients();
+    private final APIClientIngredients apiClientIngredients = new APIClientIngredients();
     private final APIClientUser apiClientUser = new APIClientUser();
+    private User user;
 
     @Before
-            public void setUp() {
+    public void setUp() {
         getIngredients();
         getRandomUserAuthInfo();
     }
@@ -72,8 +71,9 @@ public class OrderTest {
                 .statusCode(HttpStatus.SC_OK)
                 .and()
                 .assertThat()
-                .body("success", Matchers.equalTo(true));;
+                .body("success", Matchers.equalTo(true));
     }
+
     @Test
     @DisplayName("Make an order with ingredients")
     @Description("Создание заказа с игнредиентами")
@@ -94,6 +94,7 @@ public class OrderTest {
                 .assertThat()
                 .body("success", Matchers.equalTo(true));
     }
+
     @Test
     @DisplayName("")
     @Description("Создание заказа без ингредиентов")

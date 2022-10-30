@@ -1,4 +1,4 @@
-package Clients;
+package clients;
 
 public interface BaseConfigurations {
     String BASE_URL = "https://stellarburgers.nomoreparties.site";

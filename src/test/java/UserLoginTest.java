@@ -1,9 +1,9 @@
-import Clients.APIClientUser;
-import Clients.APILoginClient;
-import Models.Login;
-import Models.User;
+import clients.APIClientUser;
+import clients.APILoginClient;
 import io.restassured.response.Response;
 import jdk.jfr.Description;
+import models.Login;
+import models.User;
 import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Assert;

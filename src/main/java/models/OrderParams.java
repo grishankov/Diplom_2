@@ -1,7 +1,7 @@
-package Models;
+package models;
 
-import Clients.APIClientIngredients;
-import Clients.APIClientUser;
+import clients.APIClientIngredients;
+import clients.APIClientUser;
 import com.google.gson.GsonBuilder;
 import io.restassured.response.Response;
 
@@ -32,7 +32,7 @@ public class OrderParams {
 
     public static Token getRandomUserAuthInfo() {
         User user = User.getRandomUserFull();
-        return apiClientUser
+        return APIClientUser
                 .createUserAccount(user)
                 .body()
                 .path("accessToken");

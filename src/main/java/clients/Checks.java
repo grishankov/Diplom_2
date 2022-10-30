@@ -1,4 +1,4 @@
-package Clients;
+package clients;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
@@ -7,8 +7,8 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class Checks {
 
-    @Step ("Check result as waiting")
-    public static void checkWaitingResult (Response response, int answerCode, boolean waitingResult){
+    @Step("Check result as waiting")
+    public static void checkWaitingResult(Response response, int answerCode, boolean waitingResult) {
         response
                 .then()
                 .assertThat()
@@ -17,7 +17,7 @@ public class Checks {
                 .body("Success", equalTo(waitingResult));
     }
 
-    @Step ("Check error text as waiting")
+    @Step("Check error text as waiting")
     public static void checkWaitingMassage(Response response, int answerCode, boolean waitingResult, String errorMessage) {
         response
                 .then()
@@ -29,8 +29,8 @@ public class Checks {
                 .body("message", equalTo(errorMessage));
     }
 
-    @Step ("Check error text as waiting after user update")
-    public static void checkWatingResultAfterUpdate(Response response, int answerCode, boolean waitingResult){
+    @Step("Check error text as waiting after user update")
+    public static void checkWatingResultAfterUpdate(Response response, int answerCode, boolean waitingResult) {
         response
                 .then()
                 .assertThat()

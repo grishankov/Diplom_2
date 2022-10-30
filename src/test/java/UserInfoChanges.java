@@ -1,8 +1,7 @@
-import Clients.APIClientUser;
-import Clients.APILoginClient;
-import Models.Token;
-import Models.User;
+import clients.APIClientUser;
 import jdk.jfr.Description;
+import models.Token;
+import models.User;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +14,7 @@ public class UserInfoChanges {
     Token token;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         APIClientUser apiClientUser = new APIClientUser();
     }
 
@@ -33,7 +32,7 @@ public class UserInfoChanges {
                 .body("success", equalTo(true));
         user.setEmail(User.getRandomEmail());
         token.setUser(user);
-        apiClientUser
+        APIClientUser
                 .patchUserAccount(token)
                 .then()
                 .assertThat()
@@ -57,7 +56,7 @@ public class UserInfoChanges {
                 .body("success", equalTo(true));
         user.setEmail(User.getRandomName());
         token.setUser(user);
-        apiClientUser
+        APIClientUser
                 .patchUserAccount(token)
                 .then()
                 .assertThat()
@@ -81,7 +80,7 @@ public class UserInfoChanges {
                 .body("success", equalTo(true));
         user.setEmail(User.getRandomPassword());
         token.setUser(user);
-        apiClientUser
+        APIClientUser
                 .patchUserAccount(token)
                 .then()
                 .assertThat()
@@ -99,7 +98,7 @@ public class UserInfoChanges {
         APIClientUser.createUserAccount(user)
                 .as(Token.class);
         user.setEmail(User.getRandomEmail());
-        apiClientUser
+        APIClientUser
                 .patchUserAccount(token)
                 .then()
                 .assertThat()
@@ -117,7 +116,7 @@ public class UserInfoChanges {
         APIClientUser.createUserAccount(user)
                 .as(Token.class);
         user.setEmail(User.getRandomName());
-        apiClientUser
+        APIClientUser
                 .patchUserAccount(token)
                 .then()
                 .assertThat()
@@ -135,7 +134,7 @@ public class UserInfoChanges {
         APIClientUser.createUserAccount(user)
                 .as(Token.class);
         user.setEmail(User.getRandomPassword());
-        apiClientUser
+        APIClientUser
                 .patchUserAccount(token)
                 .then()
                 .assertThat()
